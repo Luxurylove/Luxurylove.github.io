@@ -9,7 +9,7 @@ const SITE = {
   /* ---------- 站点基础信息 ---------- */
   name: "LuxuryLove",
   /* 页面 <title> 与浏览器标签 */
-  siteTitle: "LuxuryLove · 作品集",
+  siteTitle: "LuxuryLove · 作品集 | VR · 全栈 · AI 影像",
   /* 一句话定位，出现在首屏标题下方 */
   tagline: "用 Unity 搭建可漫游的世界，也用代码把重复的事交还给系统。",
   /* 首屏标题下方的中文副标 */
