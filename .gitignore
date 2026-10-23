@@ -1,0 +1,12 @@
+# 原始素材（体积大，不上传）
+*.mov
+*.MOV
+.work/
+film-site/
+
+# 系统 / 编辑器
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/

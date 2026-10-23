@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="LuxuryLove · VR / Unity 三维作品集：VR 虚拟展馆、古画三维漫游、虚拟纪念馆。" />
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#0c0b09" />
+<title>LuxuryLove · VR 作品集</title>
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c0b09'/%3E%3Cpath d='M18 44V20h5l9 13 9-13h5v24h-6V31l-8 11-8-11v13z' fill='%23d9b27c'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Noto+Serif+SC:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+<noscript>
+  <style>
+    .reveal, .work-card, .skill-row { opacity: 1 !important; transform: none !important; }
+    .hero .scroll-hint { display: none; }
+  </style>
+</noscript>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- 开发/截图辅助：?theme=light 强制亮色、?motion=off 直接显示全部内容、?scroll=0.5 打开即滚到指定比例、?open=作品id 直接打开详情。可保留，不影响正常访问。 -->
+<script>
+(function () {
+  try {
+    var q = new URLSearchParams(location.search);
+    var root = document.documentElement;
+    var theme = q.get("theme");
+    if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+    if (q.get("motion") === "off") root.classList.add("no-motion");
+    if (q.get("snap") === "1") root.classList.add("snap");
+    var s = parseFloat(q.get("scroll"));
+    if (!isNaN(s) && s > 0) {
+      var go = function () { window.scrollTo(0, document.documentElement.scrollHeight * s); };
+      window.addEventListener("load", function () { setTimeout(go, 60); });
+    }
+  } catch (e) {}
+})();
+</script>
+
+<!-- ================= 顶部导航 ================= -->
+<header class="site-header" id="siteHeader">
+  <a class="brand" href="#top" aria-label="回到顶部">
+    <span class="brand-mark" aria-hidden="true">M</span>
+    <span class="brand-name">LuxuryLove</span>
+  </a>
+
+  <nav class="site-nav" aria-label="主导航">
+    <a href="#works" data-nav="works">作品</a>
+    <a href="#skills" data-nav="skills">能力</a>
+    <a href="#ai" data-nav="ai">AI</a>
+    <a href="#about" data-nav="about">关于</a>
+    <a href="#contact" data-nav="contact">联系</a>
+  </nav>
+
+  <div class="header-tools">
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换明暗主题" title="切换明暗主题">
+      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8"/></svg>
+      <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.6A8.4 8.4 0 1 1 9.4 4a6.8 6.8 0 0 0 10.6 10.6Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= 首屏 ================= -->
+  <section class="hero" id="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <p class="eyebrow reveal" data-reveal-delay="0">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="eyebrowText">VR DEVELOPER / 3D SCENE / VIRTUAL EXHIBITION</span>
+      </p>
+
+      <h1 class="hero-title">
+        <span class="line reveal" data-reveal-delay="80">
+          <em class="hero-name" id="heroName">LuxuryLove</em>
+        </span>
+        <span class="line line-cn reveal" data-reveal-delay="180" id="heroCn">虚拟现实 · 三维叙事</span>
+      </h1>
+
+      <p class="hero-lede reveal" data-reveal-delay="280" id="heroTagline">
+        用 Unity 搭建可漫游的世界，把文化、历史与想象装进虚拟现场。
+      </p>
+
+      <div class="hero-actions reveal" data-reveal-delay="380">
+        <a class="btn btn-primary" href="#works">
+          <span>查看作品</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M5.5 12.5 12 19l6.5-6.5"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#contact">
+          <span>联系我</span>
+        </a>
+      </div>
+
+      <div class="hero-meta reveal" data-reveal-delay="460">
+        <div class="meta-item">
+          <span class="meta-num" id="workCount">03</span>
+          <span class="meta-label">精选作品</span>
+        </div>
+        <div class="meta-divider" aria-hidden="true"></div>
+        <div class="meta-item">
+          <span class="meta-num">Unity</span>
+          <span class="meta-label">核心技术栈</span>
+        </div>
+        <div class="meta-divider" aria-hidden="true"></div>
+        <div class="meta-item">
+          <span class="meta-num" id="yearRange">2023—26</span>
+          <span class="meta-label">创作年份</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span id="scrollHintText">向下滚动 · 查看作品</span>
+      <span class="scroll-line"></span>
+    </div>
+  </section>
+
+  <!-- ================= 关键词滚动带 ================= -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>VR 漫游</span><i>✳</i><span>UNITY</span><i>✳</i><span>虚拟展陈</span><i>✳</i><span>3D SCENE</span><i>✳</i><span>古画三维化</span><i>✳</i><span>REAL-TIME</span><i>✳</i>
+      <span>VR 漫游</span><i>✳</i><span>UNITY</span><i>✳</i><span>虚拟展陈</span><i>✳</i><span>3D SCENE</span><i>✳</i><span>古画三维化</span><i>✳</i><span>REAL-TIME</span><i>✳</i>
+    </div>
+  </div>
+
+  <!-- ================= 作品 ================= -->
+  <section class="section works" id="works">
+    <div class="section-head">
+      <div>
+        <p class="section-kicker reveal"><span>01</span> Selected Works</p>
+        <h2 class="section-title reveal">精选作品</h2>
+      </div>
+      <p class="section-note reveal">点击任意作品查看详细介绍与成片视频；带「AI 协作」标记的作品，详见 AI 工作流。</p>
+    </div>
+
+    <div class="works-grid" id="worksGrid">
+      <!-- 由 main.js 根据 data.js 生成 -->
+    </div>
+  </section>
+
+  <!-- ================= 能力 ================= -->
+  <section class="section skills" id="skills">
+    <div class="section-head">
+      <div>
+        <p class="section-kicker reveal"><span>02</span> Capabilities</p>
+        <h2 class="section-title reveal">我能做什么</h2>
+      </div>
+    </div>
+
+    <div class="skill-list" id="skillList">
+      <!-- 由 main.js 生成 -->
+    </div>
+  </section>
+
+  <!-- ================= AI 工作流 ================= -->
+  <section class="section ai" id="ai">
+    <div class="section-head">
+      <div>
+        <p class="section-kicker reveal"><span>03</span> AI Workflow</p>
+        <h2 class="section-title reveal">我是怎么用 AI 的</h2>
+      </div>
+      <p class="section-note reveal" id="aiIntro">我不是把 AI 当成「一键生成」，而是把它当成一个随时在线的协作者。</p>
+    </div>
+
+    <div class="ai-grid" id="aiToolGrid">
+      <!-- 由 main.js 生成 -->
+    </div>
+
+    <div class="ai-flow reveal">
+      <p class="ai-flow-label">我的使用原则</p>
+      <ol class="ai-flow-steps" id="aiFlow">
+        <!-- 由 main.js 生成 -->
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= 关于 ================= -->
+  <section class="section about" id="about">
+    <div class="about-grid">
+      <div class="about-side reveal">
+        <p class="section-kicker"><span>04</span> About</p>
+        <h2 class="section-title">关于我</h2>
+        <div class="about-avatar" id="aboutAvatar" hidden>
+          <img alt="LuxuryLove 的头像" id="avatarImg" />
+        </div>
+      </div>
+
+      <div class="about-main">
+        <div class="about-text" id="aboutText">
+          <!-- 由 main.js 生成 -->
+        </div>
+
+        <div class="about-facts reveal">
+          <div class="fact">
+            <span class="fact-label">方向</span>
+            <span class="fact-value">VR / 实时三维 / 虚拟展陈</span>
+          </div>
+          <div class="fact">
+            <span class="fact-label">流程</span>
+            <span class="fact-value">概念 → 场景 → 交互 → 成片</span>
+          </div>
+          <div class="fact">
+            <span class="fact-label">状态</span>
+            <span class="fact-value"><span class="status-dot" aria-hidden="true"></span>持续创作中</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 联系 ================= -->
+  <section class="section contact" id="contact">
+    <div class="contact-inner">
+      <p class="section-kicker reveal"><span>05</span> Get in touch</p>
+      <h2 class="contact-title reveal">有项目想聊？<br /><em>随时找我。</em></h2>
+      <p class="contact-sub reveal">合作、约稿、作品交流都欢迎。</p>
+
+      <div class="contact-actions reveal" id="contactActions">
+        <!-- 由 main.js 生成 -->
+      </div>
+    </div>
+
+    <div class="contact-bg-text" aria-hidden="true">CONTACT</div>
+  </section>
+
+</main>
+
+<!-- ================= 页脚 ================= -->
+<footer class="site-footer">
+  <div class="footer-left">
+    <span class="brand-mark small" aria-hidden="true">M</span>
+    <span>© <span id="year">2026</span> LuxuryLove. 保留所有权利。</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-hint">Built with Unity work in mind.</span>
+    <a href="#top" class="to-top">回到顶部 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V5M5.5 11.5 12 5l6.5 6.5"/></svg></a>
+  </div>
+</footer>
+
+<!-- ================= 作品详情弹窗 ================= -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+    <button class="modal-close" type="button" aria-label="关闭" data-close-modal>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+
+    <div class="modal-top">
+      <div class="modal-media" id="modalMedia">
+        <!-- 视频 / 封面 -->
+      </div>
+
+      <div class="modal-head">
+        <p class="modal-eyebrow" id="modalEyebrow"></p>
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <p class="modal-en" id="modalEn"></p>
+        <div class="modal-meta" id="modalMeta"></div>
+        <div class="modal-tags" id="modalTags"></div>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-link-row" id="modalLinkRow" hidden>
+        <a class="modal-link" id="modalLink" href="#" target="_blank" rel="noopener noreferrer">
+          <span>在线体验</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
+
+      <div class="modal-ai" id="modalAi" hidden>
+        <h4>AI 协作</h4>
+        <div class="modal-ai-tools" id="modalAiTools"></div>
+        <p class="modal-ai-note" id="modalAiNote"></p>
+      </div>
+
+      <div class="modal-copy" id="modalCopy"></div>
+      <p class="modal-credits" id="modalCredits" hidden></p>
+
+      <div class="modal-section" id="modalHighlightsWrap">
+        <h4>做了什么</h4>
+        <ul class="modal-highlights" id="modalHighlights"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

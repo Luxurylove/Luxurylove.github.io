@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  html,body{margin:0;padding:0;width:1600px;height:1000px;overflow:hidden}
+  .cover{
+    position:relative;width:1600px;height:1000px;
+    background:
+      radial-gradient(1200px 700px at 78% 18%, rgba(217,178,124,.16), transparent 60%),
+      radial-gradient(900px 600px at 18% 92%, rgba(194,82,63,.20), transparent 62%),
+      linear-gradient(155deg,#14110d 0%,#0b0a08 62%,#100d0a 100%);
+    font-family:"Microsoft YaHei",sans-serif;color:#eee7db;overflow:hidden;
+  }
+  .grid{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(238,231,219,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(238,231,219,.045) 1px, transparent 1px);
+    background-size:80px 80px;
+    mask-image:radial-gradient(circle at 60% 45%, rgba(0,0,0,.9), transparent 78%);
+    -webkit-mask-image:radial-gradient(circle at 60% 45%, rgba(0,0,0,.9), transparent 78%);
+  }
+  .big{
+    position:absolute;right:-40px;bottom:-170px;
+    font-family:"Times New Roman",serif;font-size:520px;line-height:1;
+    color:transparent;-webkit-text-stroke:1.5px rgba(238,231,219,.10);
+    letter-spacing:-.03em;user-select:none;
+  }
+  .frame{
+    position:absolute;left:96px;top:86px;right:96px;bottom:86px;
+    border:1px solid rgba(238,231,219,.13);
+  }
+  .label{
+    position:absolute;left:146px;top:150px;
+    display:flex;align-items:center;gap:16px;
+    font-size:20px;letter-spacing:.42em;color:#d9b27c;
+  }
+  .label i{display:block;width:10px;height:10px;background:#c2523f;border-radius:50%}
+  h1{
+    position:absolute;left:140px;top:300px;margin:0;
+    font-family:"Times New Roman",serif;font-style:italic;font-weight:400;
+    font-size:196px;line-height:.9;letter-spacing:-.03em;
+    background:linear-gradient(145deg,#f4ecdd 20%,#d9b27c 70%,#c2523f 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .cn{
+    position:absolute;left:146px;top:520px;
+    font-family:"SimSun","Songti SC",serif;font-size:46px;letter-spacing:.16em;color:#eee7db;
+  }
+  .desc{
+    position:absolute;left:146px;top:610px;max-width:760px;
+    font-size:25px;line-height:1.9;color:#a79c8b;letter-spacing:.02em;
+  }
+  .tags{
+    position:absolute;left:146px;top:742px;display:flex;gap:14px;flex-wrap:wrap;
+  }
+  .tags span{
+    padding:10px 24px;border:1px solid rgba(238,231,219,.22);border-radius:999px;
+    font-size:20px;color:#cfc5b6;letter-spacing:.06em;
+  }
+  .side{
+    position:absolute;right:150px;top:300px;text-align:right;
+  }
+  .side .num{
+    font-family:"Times New Roman",serif;font-size:150px;line-height:1;color:transparent;
+    -webkit-text-stroke:1.6px rgba(217,178,124,.55);
+  }
+  .side .cap{
+    margin-top:18px;font-size:18px;letter-spacing:.34em;color:#8c8375;
+  }
+  .foot{
+    position:absolute;left:150px;bottom:132px;
+    font-family:"Times New Roman",serif;font-style:italic;font-size:24px;
+    letter-spacing:.22em;color:#6f675b;
+  }
+  .foot b{font-weight:400;color:#d9b27c}
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="grid"></div>
+  <div class="big">QBGen</div>
+  <div class="frame"></div>
+
+  <div class="label"><i></i>GRADUATION PROJECT · 毕设作品</div>
+
+  <h1>QBGen</h1>
+  <div class="cn">在线题库与自动组卷考试系统</div>
+  <div class="desc">
+    从题库录入、智能组卷到在线作答与自动判分，<br>
+    用一套完整的前后端方案，把「出卷」这件事自动化。
+  </div>
+  <div class="tags">
+    <span>uni-app</span><span>uniCloud</span><span>Vue</span><span>自动组卷</span><span>在线考试</span>
+  </div>
+
+  <div class="side">
+    <div class="num">01</div>
+    <div class="cap">FULL-STACK</div>
+  </div>
+
+  <div class="foot">LUXURYLOVE · <b>2026</b></div>
+</div>
+</body>
+</html>
