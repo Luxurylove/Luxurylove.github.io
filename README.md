@@ -119,24 +119,54 @@ const SITE = {
 
 ## 5. 把成片视频放进网站
 
-现在三件 VR 作品的成片已经压好放进 `assets/videos/` 了（1280×800 / 30fps，共约 55MB），弹窗里点播放按钮即可直接播放，不需要再处理：
+四件作品的成片已经压好放进 `assets/videos/` 了（H.264 / 30fps），弹窗里点播放按钮即可播放：
 
-| 作品 | 网页版文件 | 大小 |
-| --- | --- | --- |
-| VR 金星砚 | `assets/videos/jinyan.mp4` | 约 23 MB |
-| 画中之兽 | `assets/videos/beast.mp4` | 约 18 MB |
-| 走进红色江西 | `assets/videos/jiangxi.mp4` | 约 13 MB |
+| 作品 | 网页版文件 | 大小 | 分辨率 |
+| --- | --- | --- | --- |
+| 生命之歌 | `assets/videos/life.mp4` | 约 29 MB | 1600×900 / 1.4 Mbps |
+| VR 金星砚 | `assets/videos/jinyan.mp4` | 约 25 MB | 1280×800 / 1.4 Mbps |
+| 画中之兽 | `assets/videos/beast.mp4` | 约 20 MB | 1280×800 / 1.4 Mbps |
+| 走进红色江西 | `assets/videos/jiangxi.mp4` | 约 15 MB | 1280×800 / 1.4 Mbps |
 
-原始 `.mov` 文件（200–280MB）留着做母版即可，不需要上传。
+原始 `.mov` / 4K 母版留着即可，不需要上传。
 
-如果以后想换更清晰 / 更小的版本，用 ffmpeg 重新压：
+### 5.1 重要：视频建议放到国内能高速访问的地方
 
-```powershell
-ffmpeg -i "《VR金星砚》.mov" -vf "scale=1280:-2" -r 30 -c:v libx264 -crf 24 -preset slow -c:a aac -b:a 128k -movflags +faststart assets/videos/jinyan.mp4
+GitHub Pages 在国内的速度很不稳定。实测你这台机器：
+
+| 目标 | 实测速度 |
+| --- | --- |
+| GitHub Pages（`luxurylove.github.io`） | 0.2–0.7 Mbps |
+| 国内 CDN 基线（npmmirror） | 约 80 Mbps |
+
+1.4 Mbps 的视频需要稳定 3 Mbps 以上才能不卡，所以**从 GitHub Pages 直接放视频，国内网络基本都会卡**。两种解决办法：
+
+**办法 A：传 B 站，用播放器嵌入（免费、国内秒开，最推荐）**
+
+1. 把成片（`生命之歌（字幕）.mp4` / 三个 `.mov`）上传到 B 站，投稿通过后拿到 BV 号；
+2. 在 `data.js` 里把这件作品的 `video` 换成：
+
+```js
+video: { embed: "https://player.bilibili.com/player.html?bvid=BV1xx411c7xx&page=1&autoplay=0" }
 ```
 
-> 如果以后传到 B 站，也可以把 `video` 改成嵌入地址：
-> `video: { embed: "https://player.bilibili.com/player.html?bvid=BVxxxxxx&page=1" }`
+**办法 B：放到对象存储（腾讯云 COS / 阿里云 OSS）**
+
+上传 mp4，开公共读，拿到 `https://xxx.cos.ap-guangzhou.myqcloud.com/life.mp4` 这样的地址，然后：
+
+```js
+video: { src: ["https://xxx.cos.ap-guangzhou.myqcloud.com/life.mp4", "assets/videos/life.mp4"] }
+```
+
+`src` 写成数组时，浏览器会按顺序自动换线：第一个地址失败就换下一个，本地文件留作兜底。
+
+### 5.2 自己重新压片
+
+```powershell
+ffmpeg -i "源文件.mov" -vf "scale=1280:-2" -c:v libx264 -preset veryfast -b:v 1400k -maxrate 1700k -bufsize 2800k -g 48 -c:a aac -b:a 128k -movflags +faststart assets/videos/jinyan.mp4
+```
+
+`-g 48` 让关键帧每 1.6 秒一个，拖动进度条和开始播放都更快。
 
 ---
 

@@ -17,9 +17,10 @@
   --accent-ink: #1a1208;
   --shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
 
-  --font-display: "Fraunces", "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
-  --font-serif-cn: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
-  --font-sans: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  /* 全部使用系统字体，避免国内加载 Google Fonts 被阻断 */
+  --font-display: Georgia, "Times New Roman", "Songti SC", "STSong", "SimSun", serif;
+  --font-serif-cn: "Songti SC", "STSong", "SimSun", "Noto Serif CJK SC", serif;
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --margin: clamp(20px, 5vw, 88px);
   --max: 1560px;
@@ -1258,6 +1259,47 @@ html[data-theme="light"] .hero-glow {
   background: #000;
   object-fit: cover;
 }
+
+/* 缓冲提示：网络慢时覆盖在视频上，并给出下载兜底 */
+.media-buffering {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(6, 5, 4, 0.55);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  color: var(--text);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-align: center;
+  padding: 20px;
+}
+.media-buffering.is-visible { display: flex; }
+.media-spin {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid rgba(238, 231, 219, 0.25);
+  border-top-color: var(--accent);
+  animation: mediaSpin 0.9s linear infinite;
+}
+@keyframes mediaSpin { to { transform: rotate(360deg); } }
+.media-download {
+  pointer-events: auto;
+  margin-top: 4px;
+  padding: 7px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--accent);
+  transition: all 0.3s var(--ease);
+}
+.media-download:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+@media (prefers-reduced-motion: reduce) { .media-spin { animation: none; } }
 
 .modal-head {
   padding: clamp(28px, 3.4vw, 46px);

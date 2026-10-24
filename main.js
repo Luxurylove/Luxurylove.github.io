@@ -370,6 +370,13 @@
     return null;
   }
 
+  /* 视频地址可以是字符串，也可以是数组：浏览器会按顺序自动换线（第一个失败就试下一个） */
+  function videoSources(w) {
+    var src = w.video && w.video.src;
+    if (!src) return [];
+    return Array.isArray(src) ? src.filter(Boolean) : [src];
+  }
+
   function mediaHtml(w) {
     var html = "";
     if (hasVideo(w)) {
@@ -380,7 +387,7 @@
       html += "</button>";
       html += '<div class="media-fallback" data-media-fallback>' +
                 "<strong>视频还没有放进来</strong>" +
-                "<span>把成片放到 <code>" + esc(w.video.src || "assets/videos/") + "</code> 就能直接播放</span>" +
+                "<span>把成片放到 <code>" + esc(videoSources(w)[0] || "assets/videos/") + "</code> 就能直接播放</span>" +
               "</div>";
     } else {
       html += '<img src="' + esc(w.cover) + '" alt="' + esc(w.title) + ' 封面" />';
@@ -508,17 +515,40 @@
     }
 
     var poster = activeWork.cover;
+    var sources = videoSources(activeWork);
+    var srcTags = sources.map(function (s) {
+      return '<source src="' + esc(s) + '" type="video/mp4" />';
+    }).join("");
+
     media.innerHTML =
-      '<video controls autoplay playsinline preload="metadata" poster="' + esc(poster) + '">' +
-        '<source src="' + esc(v.src) + '" />' +
-      "</video>";
+      '<video controls autoplay playsinline preload="auto" poster="' + esc(poster) + '">' + srcTags + "</video>" +
+      '<div class="media-buffering" data-buffering>' +
+        '<span class="media-spin" aria-hidden="true"></span>' +
+        '<span class="media-buffering-text">正在缓冲…</span>' +
+        '<a class="media-download" href="' + esc(sources[0] || "#") + '" download>网速慢？下载成片</a>' +
+      "</div>";
     var video = $("video", media);
+    var buffering = $("[data-buffering]", media);
+
+    if (buffering) {
+      var showBuf = function () { buffering.classList.add("is-visible"); };
+      var hideBuf = function () { buffering.classList.remove("is-visible"); };
+      video.addEventListener("waiting", showBuf);
+      video.addEventListener("stalled", showBuf);
+      video.addEventListener("seeking", showBuf);
+      video.addEventListener("playing", hideBuf);
+      video.addEventListener("canplay", hideBuf);
+      video.addEventListener("error", showBuf);
+      if (video.readyState < 3) showBuf();
+    }
+
     if (fb) {
       media.appendChild(fb);
       fb.classList.remove("is-visible");
-      video.addEventListener("error", function () { fb.classList.add("is-visible"); });
-      var source = $("source", video);
-      if (source) source.addEventListener("error", function () { fb.classList.add("is-visible"); });
+      video.addEventListener("error", function () {
+        var src = $("source", video);
+        if (!src || src === sources[sources.length - 1]) fb.classList.add("is-visible");
+      });
     }
     var p = video.play();
     if (p && p.catch) p.catch(function () {});
