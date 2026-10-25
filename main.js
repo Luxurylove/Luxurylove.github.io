@@ -522,12 +522,18 @@
 
     /* B 站等外链播放器：国内秒开，并自动按观众网速切清晰度 */
     if (embedUrl) {
-      var dl = sources.length
-        ? '<a class="media-dl" href="' + esc(sources[0]) + '" download>下载高清原片</a>'
-        : "";
+      var vv = activeWork.video || {};
+      var extra = "";
+      if (vv.bili) {
+        /* GitHub 线路慢，直接跳 B 站看高清比下载原片实用 */
+        extra = '<a class="media-dl" href="https://www.bilibili.com/video/' + esc(vv.bili) +
+          '" target="_blank" rel="noopener">在 B 站打开高清版</a>';
+      } else if (sources.length) {
+        extra = '<a class="media-dl" href="' + esc(sources[0]) + '" download>下载高清原片</a>';
+      }
       media.innerHTML =
         '<iframe src="' + esc(embedUrl) + '" title="' + esc(activeWork.title) + ' 视频" ' +
-          'allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen loading="lazy"></iframe>' + dl;
+          'allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen loading="lazy"></iframe>' + extra;
       return;
     }
 
