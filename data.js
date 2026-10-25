@@ -159,7 +159,7 @@ const SITE = {
       aiNote: "DeepSeek 写剧本与分镜提示词；豆包出人物三视图与场景概念图；agens／豆包逐镜图生视频；剪映完成配音、配乐、字幕与调色。",
       link: "https://luxurylove.github.io/life/",
       linkLabel: "在线观看",
-      video: { src: "assets/videos/life.mp4" },
+      video: { bili: "BV1HwnU6ZEdb", src: "assets/videos/life.mp4" },
       gallery: [
         "assets/covers/life-ref-yuanyuan.jpg",
         "assets/covers/life-storyboard.jpg",
@@ -217,7 +217,7 @@ const SITE = {
       tags: ["Unity", "VR 漫游", "场景搭建", "文化展陈"],
       aiTools: ["ChatGPT"],
       aiNote: "C# 交互脚本由 ChatGPT 辅助编写。",
-      video: { src: "assets/videos/jinyan.mp4" },
+      video: { bili: "BV1panh65Eh2", src: "assets/videos/jinyan.mp4" },
       gallery: [],
     },
     {
@@ -242,7 +242,7 @@ const SITE = {
       tags: ["Unity", "古画三维化", "叙事设计", "氛围渲染"],
       aiTools: ["ChatGPT"],
       aiNote: "C# 交互脚本由 ChatGPT 辅助编写。",
-      video: { src: "assets/videos/beast.mp4" },
+      video: { bili: "BV1pQn86kEPj", src: "assets/videos/beast.mp4" },
       gallery: [],
     },
     {
@@ -267,7 +267,7 @@ const SITE = {
       tags: ["Unity", "虚拟展馆", "展陈设计", "历史主题"],
       aiTools: ["ChatGPT"],
       aiNote: "C# 交互脚本由 ChatGPT 辅助编写。",
-      video: { src: "assets/videos/jiangxi.mp4" },
+      video: { bili: "BV1yrnt66EXe", src: "assets/videos/jiangxi.mp4" },
       gallery: [],
     },
   ],
