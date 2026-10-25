@@ -4,6 +4,12 @@
 .work/
 film-site/
 
+# 成片备份：视频走 B 站外链，mp4 不再进仓库（否则推送很慢，且国内下载很慢）
+assets/videos/
+
+# 本地验证脚本与预览图
+.check/
+
 # 系统 / 编辑器
 Thumbs.db
 desktop.ini

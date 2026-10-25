@@ -42,7 +42,7 @@ npx serve .
 | `styles.css` | 配色、字体、排版、动效 | 想换风格时改 |
 | `main.js` | 渲染作品卡片、详情弹窗、主题切换等交互 | 一般不动 |
 | `assets/covers/` | 作品封面图（已从原始封面压缩到 1600px 宽） | 加新作品时放这里 |
-| `assets/videos/` | 网页播放用的 MP4（三件 VR 作品，共约 55MB） | 已配好，换片时才动 |
+| `assets/videos/` | 成片本地备份（**已被 .gitignore 忽略，不进仓库**，视频走 B 站外链） | 换片时才动 |
 | `assets/qbgen-cover.html` | QBGen 封面图的源文件，想改封面文案可以改它再截图 | 可选 |
 | `preview/` | 设计预览截图，可删 | — |
 
@@ -105,7 +105,7 @@ const SITE = {
   tags: ["Unity", "VR", "场景搭建"],
   link: "https://luxurylove.github.io/QBGen/",  // 可留 null；有链接时详情页出现「在线体验」按钮
   linkLabel: "在线体验",                          // 按钮文字，可省略
-  video: { src: "assets/videos/new-work.mp4" },  // 暂时没视频就写 null
+  video: { bili: "BV1xxxxxxxxx" },                 // B 站 BV 号；暂时没视频就写 null
   gallery: [],                                    // 额外截图，可留空
 }
 ```
@@ -117,57 +117,55 @@ const SITE = {
 
 ---
 
-## 5. 把成片视频放进网站
+## 5. 视频怎么放的（已配好，看懂就行）
 
-四件作品的成片已经压好放进 `assets/videos/` 了（H.264 / 30fps），弹窗里点播放按钮即可播放：
+**四件作品的视频都走 B 站外链播放器**，不再从 GitHub 下载视频文件：
 
-| 作品 | 网页版文件 | 大小 | 分辨率 |
-| --- | --- | --- | --- |
-| 生命之歌 | `assets/videos/life.mp4` | 约 29 MB | 1600×900 / 1.4 Mbps |
-| VR 金星砚 | `assets/videos/jinyan.mp4` | 约 25 MB | 1280×800 / 1.4 Mbps |
-| 画中之兽 | `assets/videos/beast.mp4` | 约 20 MB | 1280×800 / 1.4 Mbps |
-| 走进红色江西 | `assets/videos/jiangxi.mp4` | 约 15 MB | 1280×800 / 1.4 Mbps |
+| 作品 | B 站 BV 号 | 时长 |
+| --- | --- | --- |
+| 生命之歌 | `BV1HwnU6ZEdb` | 02:36 |
+| VR 金星砚 | `BV1panh65Eh2` | 02:22 |
+| 画中之兽 | `BV1pQn86kEPj` | 01:50 |
+| 走进红色江西 | `BV1yrnt66EXe` | 01:20 |
 
-原始 `.mov` / 4K 母版留着即可，不需要上传。
+在 `data.js` 里就是一行，换视频时只改 BV 号：
 
-### 5.1 重要：视频建议放到国内能高速访问的地方
+```js
+video: { bili: "BV1HwnU6ZEdb" },
+```
 
-GitHub Pages 在国内的速度很不稳定。实测你这台机器：
+多 P 视频可以再写 `page: 2`。BV 号就是视频网址里 `video/` 后面那一串。
+
+### 5.1 为什么不用 GitHub Pages 放视频
+
+实测你这台机器：
 
 | 目标 | 实测速度 |
 | --- | --- |
 | GitHub Pages（`luxurylove.github.io`） | 0.2–0.7 Mbps |
-| 国内 CDN 基线（npmmirror） | 约 80 Mbps |
+| 国内 CDN 基线（npmmirror） | 38–80 Mbps |
 
-1.4 Mbps 的视频需要稳定 3 Mbps 以上才能不卡，所以**从 GitHub Pages 直接放视频，国内网络基本都会卡**。两种解决办法：
+1.4 Mbps 的视频需要稳定 3 Mbps 以上才能不卡，所以从 GitHub Pages 直接放视频，国内基本都会卡顿、画面发糊。B 站 CDN 国内秒开，还会按观众网速自动切清晰度，卡顿和模糊一起解决。
 
-**办法 A：传 B 站，用播放器嵌入（免费、国内秒开，最推荐）**
+因此仓库里**不再保存 mp4**（`assets/videos/` 已加入 `.gitignore`）：
 
-1. 把成片上传到 B 站，投稿通过后拿到 BV 号（形如 `BV1xx411c7xx`）；
-2. 在 `data.js` 里给这件作品的 `video` 加一个 `bili` 字段即可，播放器会自动切成 B 站外链：
+- 仓库体积从约 200MB 降到约 10MB，`git push` 几秒完成（之前推 90MB 视频要重试十几次才成功）。
+- 本地那 4 个 mp4 仍在 `assets/videos/` 里做备份，只是不上传。
+- 原始 `.mov` / 4K 母版同样留在本地，不上传。
 
-```js
-video: { bili: "BV1xx411c7xx", src: "assets/videos/life.mp4" }
-```
+> 注意：B 站外链播放器对**未登录**观众默认最高 480p，登录后更高。即便如此，也远好于在 GitHub Pages 上卡着不动。
 
-- 只填 `bili` 就能播；保留 `src` 的话，播放器右上角会多一个「下载高清原片」入口。
-- 多 P 视频可以再写 `page: 2`。
-- B 站会按观众网速自动切清晰度，卡顿和模糊一起解决。
-- 也可以直接写完整外链：`video: { embed: "https://player.bilibili.com/player.html?bvid=BVxxxx&page=1" }`。
+### 5.2 以后想换成对象存储（腾讯云 COS / 阿里云 OSS）
 
-> 注意：B 站外链播放器对**未登录**的观众默认最高 480p，登录后更高。即使 480p，也比在 GitHub Pages 上卡着不动强得多。
-
-**办法 B：放到对象存储（腾讯云 COS / 阿里云 OSS）**
-
-上传 mp4，开公共读，拿到 `https://xxx.cos.ap-guangzhou.myqcloud.com/life.mp4` 这样的地址，然后：
+上传 mp4、开公共读，拿到地址后把 `bili` 换成 `src` 数组即可，浏览器会按顺序自动换线：
 
 ```js
-video: { src: ["https://xxx.cos.ap-guangzhou.myqcloud.com/life.mp4", "assets/videos/life.mp4"] }
+video: { src: ["https://xxx.cos.ap-guangzhou.myqcloud.com/life.mp4", "https://xxx/life-720p.mp4"] }
 ```
 
-`src` 写成数组时，浏览器会按顺序自动换线：第一个地址失败就换下一个，本地文件留作兜底。
+这样画质不受 B 站登录状态影响。也可以同时写 `bili` 和 `src`，`bili` 优先。
 
-### 5.2 自己重新压片
+### 5.3 自己重新压片（上传 B 站前可选）
 
 ```powershell
 ffmpeg -i "源文件.mov" -vf "scale=1280:-2" -c:v libx264 -preset veryfast -b:v 1400k -maxrate 1700k -bufsize 2800k -g 48 -c:a aac -b:a 128k -movflags +faststart assets/videos/jinyan.mp4

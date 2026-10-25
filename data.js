@@ -120,9 +120,13 @@ const SITE = {
        summary 详情页的项目背景段落（数组，每项一段）
        highlights 详情页的「做了什么」要点（数组）
        tags    技术关键词
-       video   视频：{ src: "assets/videos/xxx.mp4" } 本地播放
-               或 { embed: "https://player.bilibili.com/..." } 在线嵌入
+       video   视频，三种写法（推荐第一种）：
+               { bili: "BV1xxxxxxxxx" }            → B 站外链播放器，国内秒开、自动切清晰度
+               { src: "https://.../x.mp4" }        → 直接播 mp4（可写数组做多线路自动切换）
+               { embed: "https://player.../..." }  → 任意自定义嵌入地址
                暂时没有就写 null
+               注：mp4 别放进仓库（GitHub 在国内慢，还会让推送很久）；
+                   本地备份放 assets/videos/，该目录已被 .gitignore 忽略
        link    在线体验 / 仓库地址（可留 null），详情页会出现「在线体验」按钮
        aiTools 这个作品用到的 AI 工具名（如 ["ChatGPT", "DeepSeek"]），卡片会显示「AI 协作」
        aiNote  这个作品里 AI 具体负责什么（详情页「AI 协作」一栏显示）
@@ -159,7 +163,7 @@ const SITE = {
       aiNote: "DeepSeek 写剧本与分镜提示词；豆包出人物三视图与场景概念图；agens／豆包逐镜图生视频；剪映完成配音、配乐、字幕与调色。",
       link: "https://luxurylove.github.io/life/",
       linkLabel: "在线观看",
-      video: { bili: "BV1HwnU6ZEdb", src: "assets/videos/life.mp4" },
+      video: { bili: "BV1HwnU6ZEdb" },
       gallery: [
         "assets/covers/life-ref-yuanyuan.jpg",
         "assets/covers/life-storyboard.jpg",
@@ -217,7 +221,7 @@ const SITE = {
       tags: ["Unity", "VR 漫游", "场景搭建", "文化展陈"],
       aiTools: ["ChatGPT"],
       aiNote: "C# 交互脚本由 ChatGPT 辅助编写。",
-      video: { bili: "BV1panh65Eh2", src: "assets/videos/jinyan.mp4" },
+      video: { bili: "BV1panh65Eh2" },
       gallery: [],
     },
     {
@@ -242,7 +246,7 @@ const SITE = {
       tags: ["Unity", "古画三维化", "叙事设计", "氛围渲染"],
       aiTools: ["ChatGPT"],
       aiNote: "C# 交互脚本由 ChatGPT 辅助编写。",
-      video: { bili: "BV1pQn86kEPj", src: "assets/videos/beast.mp4" },
+      video: { bili: "BV1pQn86kEPj" },
       gallery: [],
     },
     {
@@ -267,7 +271,7 @@ const SITE = {
       tags: ["Unity", "虚拟展馆", "展陈设计", "历史主题"],
       aiTools: ["ChatGPT"],
       aiNote: "C# 交互脚本由 ChatGPT 辅助编写。",
-      video: { bili: "BV1yrnt66EXe", src: "assets/videos/jiangxi.mp4" },
+      video: { bili: "BV1yrnt66EXe" },
       gallery: [],
     },
   ],
