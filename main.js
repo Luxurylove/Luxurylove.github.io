@@ -257,7 +257,18 @@
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
   function hasVideo(w) {
-    return !!(w.video && (w.video.src || w.video.embed));
+    return !!(w.video && (w.video.src || w.video.embed || w.video.bili));
+  }
+
+  /* 播放地址优先级：embed（完整外链） > bili（只填 BV 号） > src（本地/GitHub 文件） */
+  function videoEmbedUrl(w) {
+    var v = (w && w.video) || {};
+    if (v.embed) return v.embed;
+    if (v.bili) {
+      return "https://player.bilibili.com/player.html?bvid=" + encodeURIComponent(v.bili) +
+        "&page=" + (v.page || 1) + "&high_quality=1&danmaku=0&autoplay=1";
+    }
+    return "";
   }
 
   function pad2(n) { return n < 10 ? "0" + n : String(n); }
@@ -506,16 +517,21 @@
     videoStarted = true;
     var media = $("#modalMedia");
     var fb = $("[data-media-fallback]", media);
-    var v = activeWork.video;
+    var sources = videoSources(activeWork);
+    var embedUrl = videoEmbedUrl(activeWork);
 
-    if (v.embed) {
-      media.innerHTML = '<iframe src="' + esc(v.embed) + '" title="' + esc(activeWork.title) +
-        '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+    /* B 站等外链播放器：国内秒开，并自动按观众网速切清晰度 */
+    if (embedUrl) {
+      var dl = sources.length
+        ? '<a class="media-dl" href="' + esc(sources[0]) + '" download>下载高清原片</a>'
+        : "";
+      media.innerHTML =
+        '<iframe src="' + esc(embedUrl) + '" title="' + esc(activeWork.title) + ' 视频" ' +
+          'allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen loading="lazy"></iframe>' + dl;
       return;
     }
 
     var poster = activeWork.cover;
-    var sources = videoSources(activeWork);
     var srcTags = sources.map(function (s) {
       return '<source src="' + esc(s) + '" type="video/mp4" />';
     }).join("");

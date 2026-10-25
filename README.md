@@ -143,12 +143,19 @@ GitHub Pages 在国内的速度很不稳定。实测你这台机器：
 
 **办法 A：传 B 站，用播放器嵌入（免费、国内秒开，最推荐）**
 
-1. 把成片（`生命之歌（字幕）.mp4` / 三个 `.mov`）上传到 B 站，投稿通过后拿到 BV 号；
-2. 在 `data.js` 里把这件作品的 `video` 换成：
+1. 把成片上传到 B 站，投稿通过后拿到 BV 号（形如 `BV1xx411c7xx`）；
+2. 在 `data.js` 里给这件作品的 `video` 加一个 `bili` 字段即可，播放器会自动切成 B 站外链：
 
 ```js
-video: { embed: "https://player.bilibili.com/player.html?bvid=BV1xx411c7xx&page=1&autoplay=0" }
+video: { bili: "BV1xx411c7xx", src: "assets/videos/life.mp4" }
 ```
+
+- 只填 `bili` 就能播；保留 `src` 的话，播放器右上角会多一个「下载高清原片」入口。
+- 多 P 视频可以再写 `page: 2`。
+- B 站会按观众网速自动切清晰度，卡顿和模糊一起解决。
+- 也可以直接写完整外链：`video: { embed: "https://player.bilibili.com/player.html?bvid=BVxxxx&page=1" }`。
+
+> 注意：B 站外链播放器对**未登录**的观众默认最高 480p，登录后更高。即使 480p，也比在 GitHub Pages 上卡着不动强得多。
 
 **办法 B：放到对象存储（腾讯云 COS / 阿里云 OSS）**
 
